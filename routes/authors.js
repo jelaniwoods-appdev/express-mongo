@@ -10,21 +10,22 @@ router.get('/new', (req, res) => {
   res.render('authors/new', { author: new Author() })
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const author = new Author({
     name: req.body.name
   })
-  author.save((err, newAuthor) => {
-    if (err) {
-      res.render('authors/new', {
-        author: author,
-        errorMessage: 'Error happened'
-      })
-    } else {
-      // res.redirect(`authors/${newAuthor.id}`)
-      res.redirect('/')
-    }
-  })
+
+  try {
+    const newAuthor = await author.save()
+    // res.redirect(`authors/${newAuthor.id}`)
+    res.redirect('/')
+  } catch (error) {
+    res.render('authors/new', {
+      author: author,
+      errorMessage: 'Error happened'
+    })
+  }
+  // bc mongodb operates asyncronously
 })
 
 module.exports = router
