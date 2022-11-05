@@ -17,7 +17,7 @@ app.set('layout', 'layouts/layout')
 
 app.use(expressLayouts)
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ limit: '10mb' }))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
