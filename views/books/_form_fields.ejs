@@ -1,8 +1,4 @@
 <div>
-  <label for="title">title</label>
-  <input type="text" id="title" name="title" value="<%= book.title %>">
-</div>
-<div>
   <label for="author">author</label>
   <select name="author" id="author">
     <% authors.forEach(author => { %>
@@ -13,5 +9,13 @@
       <% } %>
     <% }) %>
   </select>
+</div>
+<div>
+  <label for="title">title</label>
+  <input type="text" id="title" name="title" value="<%= book.title %>">
+</div>
+<div>
+  <label for="publishedDate">Published Date</label>
+  <input type="date" id="publishedDate" name="publishedDate" value="<%= book.publishedDate == null ? '' : book.publishedDate.toISOString().split('T')[0] %>">
 </div>
 
