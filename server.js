@@ -5,16 +5,15 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
-const bodyParser = require('body-parser') // included in express 4.16+
+const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index')
-const authorsRouter = require('./routes/authors')
-const booksRouter = require('./routes/books')
+const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
-
 app.use(expressLayouts)
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
@@ -27,7 +26,7 @@ db.on('error', error => console.log(error))
 db.once('open', () => console.log('this world has been connected~'))
 
 app.use('/', indexRouter)
-app.use('/authors', authorsRouter)
-app.use('/books', booksRouter)
+app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
 
 app.listen(process.env.PORT || 3000)

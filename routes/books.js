@@ -20,12 +20,12 @@ router.get('/', async (req, res) => {
   if (req.query.title != null && req.query.title != '') {
     query = query.regex('title', new RegExp(req.query.title, 'i'))
   }
-  if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
-    query = query.lte('publishedDate', req.query.publishedBefore)
-  }
-  if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
-    query = query.gte('publishedDate', req.query.publishedAfter)
-  }
+  // if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
+  //   query = query.lte('publishedDate', req.query.publishedBefore)
+  // }
+  // if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
+  //   query = query.gte('publishedDate', req.query.publishedAfter)
+  // }
   try {
     const books = await query.exec()
     res.render('books/index', {
@@ -48,7 +48,7 @@ router.post('/', upload.single('cover'), async (req, res) => {
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
-    publishedDate: new Date(req.body.publishedDate),
+    // publishedDate: new Date(req.body.publishedDate),
     pageCount: req.body.pageCount,
     coverImageName: fileName,
     description: req.body.description
@@ -58,7 +58,8 @@ router.post('/', upload.single('cover'), async (req, res) => {
     const newBook = await book.save()
     // res.redirect(`books/${newBook.id}`)
     res.redirect(`books`)
-  } catch {
+  } catch(error) {
+    console.log(error)
     if (book.coverImageName != null) {
       removeBookCover(book.coverImageName)
     }

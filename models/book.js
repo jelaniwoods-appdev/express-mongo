@@ -12,7 +12,7 @@ const bookSchema = new mongoose.Schema({
   },
   publishedDate: {
     type: Date,
-    required: true
+    required: false
   },
   pageCount: {
     type: Number,
